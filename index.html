@@ -197,13 +197,46 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 .i-l{font-size:11px;color:var(--muted);line-height:1.35}
 
 /* ── CLIENTS ── */
-.cl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}
+.cl-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+  max-width:700px;
+  margin:0 auto;
+}
 .cl-tile{border:1px solid var(--border);border-radius:10px;height:78px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:#fff;transition:border-color .2s}
 .cl-tile:hover{border-color:var(--green)}
 .cl-av{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
 .cl-n{font-size:10px;color:var(--muted)}
 .cl-note{font-size:11px;color:#aaa;margin-top:10px;font-style:italic}
+.cl-logo{
+  width:50px;
+  height:50px;
+  object-fit:contain;
+}
 
+.cl-tile{
+  border:1px solid var(--border);
+  border-radius:10px;
+  height:100px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:#fff;
+  transition:border-color .2s;
+}
+
+.cl-tile:hover{
+  border-color:var(--green);
+}
+
+.cl-n{
+  font-size:12px;
+  color:var(--muted);
+  text-align:center;
+}
 /* ── TESTIMONIALS ── */
 .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
 .t-card{border:1px solid var(--border);border-radius:12px;padding:22px;background:#fff}
@@ -795,18 +828,34 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <div class="sec-sub">Organisations across manufacturing, pharma, IT services, and healthcare. Client logos will be displayed once consent is confirmed.</div>
     </div>
   </div>
-  <div class="cl-grid">
-    <div class="cl-tile"><div class="cl-av" style="background:var(--green)">A</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--sky)">B</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--navy)">C</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--green)">D</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--sky)">E</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--navy)">F</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--green)">G</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--sky)">H</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--navy)">I</div><div class="cl-n">Pending consent</div></div>
-    <div class="cl-tile"><div class="cl-av" style="background:var(--green)">J</div><div class="cl-n">Pending consent</div></div>
+ <div class="cl-grid">
+  <div class="cl-tile">
+    <img src="chowgule2-converted-from-png.svg" class="cl-logo">
+    <div class="cl-n">Chowgule SBD</div>
   </div>
+  <div class="cl-tile">
+    <img src="logo-converted-from-png.svg" class="cl-logo">
+    <div class="cl-n">Cloude2scale</div>
+  </div>
+  <div class="cl-tile">
+    <img src="juno_logo_1024x1024-converted-from-webp.svg" class="cl-logo">
+    <div class="cl-n">Juno School</div>
+  </div>
+  <div class="cl-tile">
+    <img src="template_photo_1.svg" class="cl-logo">
+    <div class="cl-n">Paragon Tapes</div>
+  </div>
+  <div class="cl-tile">
+    <img src="61389611a332e4a1a396414e_Turbotech-logo-p-500-converted-from-png.svg" class="cl-logo">
+    <div class="cl-n">Turbotech Precision</div>
+  </div>
+  <div class="cl-tile">
+    <img src="cii-logoNew-converted-from-png.svg" class="cl-logo">
+    <div class="cl-n">CII</div>
+  </div>
+</div>
+
+<p class="cl-note">Trusted by leading organisations across industries.</p>
   <p class="cl-note">* Awaiting client consent to display logos — will be updated shortly.</p>
 
   
@@ -902,8 +951,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
   <div class="contact-grid">
     <div class="ci-list">
       <div class="ci-item"><div class="ci-ico">📍</div><div><strong>Office</strong><span>5BM-248, HRBR Layout, 2nd Block, Kalyan Nagar, Near Banaswadi Police Station, Bangalore 560043</span></div></div>
-      <div class="ci-item"><div class="ci-ico">📞</div><div><strong>Phone</strong><span id="phone-display">[New phone number to be updated]</span></div></div>
-      <div class="ci-item"><div class="ci-ico">✉️</div><div><strong>Email</strong><span>contact@seedscg.com</span></div></div>
+      <div class="ci-item"><div class="ci-ico">📞</div><div><strong>Phone</strong><span id="phone-display">+91 99001 61782</span></div></div>
+      <div class="ci-item"><div class="ci-ico">✉️</div><div><strong>Email</strong><span>raghukram@gmail.com</span></div></div>
       <div class="ci-item"><div class="ci-ico">🕐</div><div><strong>Hours</strong><span>Monday – Saturday, 9:00 AM – 5:00 PM IST</span></div></div>
       <div class="c-note"><p>Consulting enquiry?</p><span>Share your challenge and we'll respond within 24 hours with a tailored approach.</span></div>
     </div>
