@@ -247,24 +247,45 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 .au-n{font-size:13px;font-weight:700;color:var(--navy)}
 .au-r{font-size:11px;color:var(--muted)}
 
-/* ── AWARDS ── */
-.awards-intro{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:28px;max-width:640px}
-.awards-section-label{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.awards-section-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.awards-row{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:32px}
-.award-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;transition:border-color .2s,box-shadow .2s}
-.award-card:hover{border-color:var(--green);box-shadow:0 4px 16px rgba(45,106,79,.1)}
-.award-img{height:200px;background:linear-gradient(135deg,var(--green-lt) 0%,var(--sky-lt) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;border-bottom:1px solid var(--border);position:relative}
-.award-img .aw-icon{font-size:40px}
-.award-img .img-hint{position:absolute;bottom:10px;font-size:11px;background:rgba(255,255,255,.85);padding:3px 12px;border-radius:100px;color:var(--green);font-weight:600;border:1px solid var(--green-bdr)}
-.award-body{padding:18px 20px}
-.award-type{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
-.at-seeds{color:var(--green)}
-.at-client{color:var(--sky)}
-.award-body h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:5px}
-.award-body p{font-size:13px;color:var(--muted);line-height:1.6}
-.award-year{font-size:11px;color:var(--muted);margin-top:8px;font-weight:600}
+/* ── GALLERY ── */
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
 
+.gallery-item{
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:#fff;
+  transition:transform .2s, box-shadow .2s;
+}
+
+.gallery-item:hover{
+  transform:scale(1.02);
+  box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+
+.gallery-item img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+
+/* responsive */
+@media(max-width:860px){
+  .gallery-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:520px){
+  .gallery-grid{
+    grid-template-columns:1fr;
+  }
+}
 /* ── CONTACT ── */
 .contact-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:36px}
 .ci-list{display:flex;flex-direction:column;gap:16px}
@@ -358,7 +379,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
     <a onclick="goTo('resources')">Resources</a>
     <a onclick="goTo('casestudies')">Case Studies</a>
     <a onclick="goTo('clients')">Clients</a>
-    <a onclick="goTo('awards')">Awards</a>
+    <a onclick="goTo('gallery')">Gallery</a>
     <a onclick="goTo('contact')">Contact</a>
     <button class="nav-cta" onclick="goTo('contact')">Book a Call</button>
   </div>
@@ -863,80 +884,48 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 
 <div class="divider"></div>
 
-<!-- ══ AWARDS ══ -->
-<div class="sec alt" id="awards">
+<!-- ══ GALLERY ══ -->
+<div class="sec alt" id="gallery">
   <div class="sec-head">
     <div class="sec-bar"></div>
     <div>
-      <div class="sec-tag">Recognition</div>
-      <div class="sec-title">Awards & recognition</div>
-      <div class="sec-sub">Celebrating excellence — both our own recognition and the certifications our clients have achieved through Seeds-led programs.</div>
-    </div>
-  </div>
-
-  <div class="awards-section-label">Seeds Consulting Group — Our awards</div>
-  <div class="awards-row">
-    <div class="award-card">
-      <div class="award-img">
-        <span class="aw-icon">🏅</span>
-        <p style="font-size:12px;color:var(--muted);text-align:center;padding:0 20px">Award photo / certificate<br>to be placed here</p>
-        <span class="img-hint">📷 Replace with award photo</span>
-      </div>
-      <div class="award-body">
-        <div class="award-type at-seeds">Seeds Consulting Group</div>
-        <h4>Award / Recognition 1</h4>
-        <p>Details to be provided — title, issuing body, and context of the award.</p>
-        <div class="award-year">Year: ——</div>
-      </div>
-    </div>
-    <div class="award-card">
-      <div class="award-img">
-        <span class="aw-icon">🏆</span>
-        <p style="font-size:12px;color:var(--muted);text-align:center;padding:0 20px">Award photo / certificate<br>to be placed here</p>
-        <span class="img-hint">📷 Replace with award photo</span>
-      </div>
-      <div class="award-body">
-        <div class="award-type at-seeds">Seeds Consulting Group</div>
-        <h4>Award / Recognition 2</h4>
-        <p>Details to be provided — title, issuing body, and context of the award.</p>
-        <div class="award-year">Year: ——</div>
+      <div class="sec-tag">Gallery</div>
+      <div class="sec-title">Our work in action</div>
+      <div class="sec-sub">
+        A visual glimpse into our training sessions, consulting engagements, and client interactions.
       </div>
     </div>
   </div>
 
-  <div class="awards-section-label">Client certifications — achieved through Seeds-led programs</div>
-  <div class="awards-row">
-    <div class="award-card">
-      <div class="award-img" style="background:linear-gradient(135deg,var(--sky-lt) 0%,#dceeff 100%)">
-        <span class="aw-icon">🎖️</span>
-        <p style="font-size:12px;color:var(--muted);text-align:center;padding:0 20px">Client award photo<br>to be placed here</p>
-        <span class="img-hint" style="background:rgba(255,255,255,.85);color:var(--sky);border-color:var(--sky-bdr)">📷 Replace with photo</span>
-      </div>
-      <div class="award-body">
-        <div class="award-type at-client">Client Achievement</div>
-        <h4>Client Certification / Award 1</h4>
-        <p>Details to be provided — client (if consented), certification body, and Seeds' role in enabling this achievement.</p>
-        <div class="award-year">Year: ——</div>
-      </div>
+  <div class="gallery-grid">
+
+    <!-- Replace src with your GitHub image paths -->
+    <div class="gallery-item">
+      <img src="images/gallery1.jpg" alt="Gallery Image 1">
     </div>
-    <div class="award-card">
-      <div class="award-img" style="background:linear-gradient(135deg,var(--sky-lt) 0%,#dceeff 100%)">
-        <span class="aw-icon">⭐</span>
-        <p style="font-size:12px;color:var(--muted);text-align:center;padding:0 20px">Client award photo<br>to be placed here</p>
-        <span class="img-hint" style="background:rgba(255,255,255,.85);color:var(--sky);border-color:var(--sky-bdr)">📷 Replace with photo</span>
-      </div>
-      <div class="award-body">
-        <div class="award-type at-client">Client Achievement</div>
-        <h4>Client Certification / Award 2</h4>
-        <p>Details to be provided — client (if consented), certification body, and Seeds' role in enabling this achievement.</p>
-        <div class="award-year">Year: ——</div>
-      </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery2.jpg" alt="Gallery Image 2">
     </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery3.jpg" alt="Gallery Image 3">
+    </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery4.jpg" alt="Gallery Image 4">
+    </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery5.jpg" alt="Gallery Image 5">
+    </div>
+
+    <div class="gallery-item">
+      <img src="images/gallery6.jpg" alt="Gallery Image 6">
+    </div>
+
   </div>
-  <p style="font-size:12px;color:#aaa;text-align:center;font-style:italic;margin-top:8px">Award details and photos will be added once information is shared.</p>
 </div>
-
-<div class="divider"></div>
 
 <!-- ══ CONTACT ══ -->
 <div class="sec" id="contact">
@@ -1024,7 +1013,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <li><a onclick="goTo('about')">Our story</a></li>
       <li><a onclick="goTo('founder')">The founder</a></li>
       <li><a onclick="goTo('casestudies')">Case studies</a></li>
-      <li><a onclick="goTo('awards')">Awards</a></li>
+      <li><a onclick="goTo('gallery')">Gallery</a></li>
       <li><a onclick="goTo('contact')">Contact us</a></li>
     </ul>
   </div>
