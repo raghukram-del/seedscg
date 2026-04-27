@@ -375,9 +375,165 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
   .cl-grid{grid-template-columns:repeat(2,1fr)}
   .footer{grid-template-columns:1fr}
 }
+
+/* ══════════════════════════════════════════
+   ANIMATION SYSTEM
+   ══════════════════════════════════════════ */
+
+/* ── Custom cursor ── */
+*{cursor:none!important}
+#cursor-dot{
+  position:fixed;width:6px;height:6px;background:var(--green);border-radius:50%;
+  pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+}
+#cursor-ring{
+  position:fixed;width:26px;height:26px;border:1.5px solid var(--green);border-radius:50%;
+  pointer-events:none;z-index:9998;transform:translate(-50%,-50%);
+  opacity:0.5;
+  transition:width .15s ease,height .15s ease,opacity .15s ease,border-color .15s ease;
+}
+#cursor-dot.hovered{background:var(--sky)}
+#cursor-ring.hovered{width:38px;height:38px;border-color:var(--sky);opacity:0.3}
+#cursor-trail{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9997}
+
+/* ── Scroll-reveal base ── */
+.reveal{
+  opacity:0;transform:translateY(32px);
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-left{
+  opacity:0;transform:translateX(-40px);
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);
+}
+.reveal-left.visible{opacity:1;transform:translateX(0)}
+.reveal-right{
+  opacity:0;transform:translateX(40px);
+  transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);
+}
+.reveal-right.visible{opacity:1;transform:translateX(0)}
+.reveal-scale{
+  opacity:0;transform:scale(.92);
+  transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);
+}
+.reveal-scale.visible{opacity:1;transform:scale(1)}
+
+/* stagger delays */
+.stagger-1{transition-delay:.08s}
+.stagger-2{transition-delay:.16s}
+.stagger-3{transition-delay:.24s}
+.stagger-4{transition-delay:.32s}
+.stagger-5{transition-delay:.40s}
+.stagger-6{transition-delay:.48s}
+
+/* ── Hero animations ── */
+@keyframes heroSlideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes heroBgFloat{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.04) rotate(1deg)}}
+@keyframes statCount{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.hero-badge{animation:heroSlideUp .6s .1s both}
+.hero h1{animation:heroSlideUp .65s .2s both}
+.hero-desc{animation:heroSlideUp .65s .35s both}
+.hero-btns{animation:heroSlideUp .65s .45s both}
+.hero-stats{animation:heroSlideUp .65s .55s both}
+.hero-bg{animation:heroBgFloat 8s ease-in-out infinite}
+.hero-tagline-bg{animation:heroSlideUp .65s .65s both}
+
+/* ── Nav animation ── */
+@keyframes navSlideDown{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
+nav{animation:navSlideDown .5s .05s both}
+
+/* ── Floating decorative dots ── */
+@keyframes floatDot{0%,100%{transform:translateY(0) scale(1);opacity:.4}50%{transform:translateY(-18px) scale(1.2);opacity:.8}}
+.hero::after{
+  content:'';position:absolute;width:320px;height:320px;border-radius:50%;
+  background:radial-gradient(circle,rgba(45,106,79,.12) 0%,transparent 70%);
+  top:-60px;right:80px;pointer-events:none;
+  animation:floatDot 7s ease-in-out infinite;
+}
+
+/* ── Sec-bar line grow ── */
+@keyframes barGrow{from{transform:scaleY(0);transform-origin:top}to{transform:scaleY(1);transform-origin:top}}
+.sec-bar{animation:barGrow .5s .1s both}
+
+/* ── Card hover lift ── */
+.c-card,.t-cat,.res-card,.diff,.pillar,.case-card,.t-card{
+  transition:border-color .2s,box-shadow .25s,transform .25s;
+}
+.c-card:hover,.t-cat:hover,.res-card:hover,.diff:hover,.pillar:hover,.t-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 8px 28px rgba(45,106,79,.13);
+}
+.case-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(45,106,79,.1)}
+
+/* ── Stat number count-up flash ── */
+@keyframes countFlash{0%{color:var(--navy)}50%{color:var(--green)}100%{color:var(--green)}}
+.s-num.counting{animation:countFlash .6s forwards}
+
+/* ── Button micro-interactions ── */
+.btn-green,.btn-navy,.btn-outline,.nav-cta,.s-btn,.wa-btn,.res-btn{
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
+}
+.btn-green:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 6px 18px rgba(45,106,79,.3)}
+.btn-navy:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 6px 18px rgba(11,31,58,.3)}
+.btn-outline:hover{transform:translateY(-2px) scale(1.02)}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(45,106,79,.25)}
+
+/* ── Footer link hover ── */
+.footer ul li a{transition:color .15s,letter-spacing .15s}
+.footer ul li a:hover{letter-spacing:.02em}
+
+/* ── Section tag pulse ── */
+@keyframes tagPop{0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+.sec-tag:hover{animation:tagPop .3s ease}
+
+/* ── Input focus glow ── */
+.ff input,.ff select,.ff textarea{transition:border-color .2s,box-shadow .2s,transform .15s}
+.ff input:focus,.ff select:focus,.ff textarea:focus{transform:translateY(-1px)}
+
+/* ════════════════════════════════
+   CLIENTS — INFINITE MARQUEE
+   ════════════════════════════════ */
+.clients-marquee-wrap{
+  overflow:hidden;
+  position:relative;
+  padding:16px 0;
+  mask-image:linear-gradient(to right,transparent 0%,#000 8%,#000 92%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 8%,#000 92%,transparent 100%);
+}
+.clients-marquee-track{
+  display:flex;
+  gap:20px;
+  width:max-content;
+  animation:marqueeScroll 22s linear infinite;
+}
+.clients-marquee-wrap:hover .clients-marquee-track{animation-play-state:paused}
+@keyframes marqueeScroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+.cl-tile-m{
+  flex-shrink:0;
+  border:1px solid var(--border);border-radius:12px;
+  width:160px;height:100px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  background:#fff;
+  transition:border-color .25s,box-shadow .25s,transform .25s;
+}
+.cl-tile-m:hover{
+  border-color:var(--green);
+  box-shadow:0 6px 20px rgba(45,106,79,.15);
+  transform:translateY(-4px) scale(1.04);
+}
+.cl-tile-m .cl-logo{width:54px;height:54px;object-fit:contain}
+.cl-tile-m .cl-n{font-size:11px;color:var(--muted);text-align:center;font-weight:500}
 </style>
 </head>
 <body>
+<!-- Custom cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<canvas id="cursor-trail"></canvas>
+
 <div class="page" id="top">
 
 <!-- ══ NAV ══ -->
@@ -424,9 +580,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <button class="btn-outline" onclick="goTo('casestudies')">View Our Work ↓</button>
     </div>
     <div class="hero-stats">
-      <div class="s-box"><div class="s-num">22+</div><div class="s-lbl">Years experience</div></div>
-      <div class="s-box"><div class="s-num">2000+</div><div class="s-lbl">Professionals trained</div></div>
-      <div class="s-box" style="border-right:none"><div class="s-num">40+</div><div class="s-lbl">Client engagements</div></div>
+      <div class="s-box reveal stagger-1"><div class="s-num">22+</div><div class="s-lbl">Years experience</div></div>
+      <div class="s-box reveal stagger-2"><div class="s-num">2000+</div><div class="s-lbl">Professionals trained</div></div>
+      <div class="s-box reveal stagger-3" style="border-right:none"><div class="s-num">40+</div><div class="s-lbl">Client engagements</div></div>
     </div>
   </div>
   <div class="hero-tagline-bg"><span>"Chase Perfection… Attain <em>Excellence</em>"</span></div>
@@ -445,13 +601,13 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
     </div>
   </div>
   <div class="about-2col">
-    <div class="about-text">
+    <div class="about-text reveal-left">
       <p>For decades, businesses have invested in either process improvement methodologies or people development — rarely both, and almost never in an integrated way. The result? Lean Six Sigma projects that fail to sustain. Leadership programs that never connect to business outcomes.</p>
       <p>Seeds was created to close that gap. We don't parachute in, deliver a program, and leave. We plant capabilities that take root within the organisation, grow over time, and eventually thrive without us.</p>
       <blockquote>"Sustainable transformation isn't about the solution you provide — it's about the capability you leave behind."</blockquote>
       <p>Built on over 22 years of hands-on industry experience, every engagement is anchored in real-world business outcomes. Every program is designed to be applied, not archived.</p>
     </div>
-    <div class="pillars">
+    <div class="pillars reveal-right">
       <div class="pillar">
         <h4>Lean Six Sigma Training & Certification</h4>
         <p>Green Belt and Black Belt programs built around real project execution. Participants apply tools to live business problems under expert guidance — certification backed by demonstrable impact.</p>
@@ -466,7 +622,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       </div>
     </div>
   </div>
-  <div class="diff-grid">
+  <div class="diff-grid reveal">
     <div class="diff"><h4><span>🔗</span>Process + People, Together</h4><p>We are one of the very few firms that treats these as inseparable — not complementary add-ons. Without capable people, even the best processes collapse.</p></div>
     <div class="diff"><h4><span>🏭</span>Practitioner-led, not Classroom-driven</h4><p>Programs delivered by professionals who have led real transformations inside real organisations — not by trainers who've only ever taught.</p></div>
     <div class="diff"><h4><span>🌱</span>Capability Over Dependency</h4><p>We measure success by how little our clients need us over time. Our goal is to build internal champions who sustain and lead improvement independently.</p></div>
@@ -486,7 +642,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <div class="sec-sub">Lean Six Sigma Master Black Belt with 22+ years of hands-on industry experience.</div>
     </div>
   </div>
-  <div class="founder-wrap">
+  <div class="founder-wrap reveal">
     <div class="founder-photo-card">
       <div class="photo-area">
         <img src="images/founder.JPG" alt="Raghuram K" class="founder-img">
@@ -532,7 +688,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <div class="sec-sub">Strategic and operational consulting across five pillars — helping organisations build lasting competitive advantage.</div>
     </div>
   </div>
-  <div class="c-grid">
+  <div class="c-grid reveal">
     <div class="c-card">
       <div class="c-ico ci1">⚙️</div>
       <h3>Operations excellence</h3>
@@ -612,7 +768,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <div class="sec-sub">Hands-on programs for individuals and corporate teams — IASSC-aligned, delivered by a certified Master Black Belt. All programs are customisable in duration and depth based on client needs.</div>
     </div>
   </div>
-  <div class="train-grid">
+  <div class="train-grid reveal">
     <div class="t-cat feat">
       <div class="pop-pill">Core offering</div>
       <div class="t-icon">🏆</div>
@@ -725,7 +881,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <div class="sec-sub">Real, data-driven transformations across manufacturing, pharma, IT services, and healthcare. Click any case to read the full methodology and impact.</div>
     </div>
   </div>
-  <div class="case-list">
+  <div class="case-list reveal">
 
     <div class="case-card">
       <div class="case-hd" onclick="toggleCase('c1')">
@@ -874,33 +1030,25 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
       <div class="sec-sub">Organisations across manufacturing, pharma, IT services, and healthcare.</div>
     </div>
   </div>
- <div class="cl-grid">
-  <div class="cl-tile">
-    <img src="chowgule2-converted-from-png.svg" class="cl-logo">
-    <div class="cl-n">Chowgule SBD</div>
-  </div>
-  <div class="cl-tile">
-    <img src="logo-converted-from-png.svg" class="cl-logo">
-    <div class="cl-n">Cloude2scale</div>
-  </div>
-  <div class="cl-tile">
-    <img src="juno_logo_1024x1024-converted-from-webp.svg" class="cl-logo">
-    <div class="cl-n">Juno School</div>
-  </div>
-  <div class="cl-tile">
-    <img src="template_photo_1.svg" class="cl-logo">
-    <div class="cl-n">Paragon Tapes</div>
-  </div>
-  <div class="cl-tile">
-    <img src="61389611a332e4a1a396414e_Turbotech-logo-p-500-converted-from-png.svg" class="cl-logo">
-    <div class="cl-n">Turbotech Precision</div>
-  </div>
-  <div class="cl-tile">
-    <img src="cii-logoNew-converted-from-png.svg" class="cl-logo">
-    <div class="cl-n">CII</div>
+<!-- Clients marquee — infinite scroll, pauses on hover -->
+<div class="clients-marquee-wrap">
+  <div class="clients-marquee-track">
+    <!-- First set -->
+    <div class="cl-tile-m"><img src="chowgule2-converted-from-png.svg" class="cl-logo"><div class="cl-n">Chowgule SBD</div></div>
+    <div class="cl-tile-m"><img src="logo-converted-from-png.svg" class="cl-logo"><div class="cl-n">Cloude2scale</div></div>
+    <div class="cl-tile-m"><img src="juno_logo_1024x1024-converted-from-webp.svg" class="cl-logo"><div class="cl-n">Juno School</div></div>
+    <div class="cl-tile-m"><img src="template_photo_1.svg" class="cl-logo"><div class="cl-n">Paragon Tapes</div></div>
+    <div class="cl-tile-m"><img src="61389611a332e4a1a396414e_Turbotech-logo-p-500-converted-from-png.svg" class="cl-logo"><div class="cl-n">Turbotech Precision</div></div>
+    <div class="cl-tile-m"><img src="cii-logoNew-converted-from-png.svg" class="cl-logo"><div class="cl-n">CII</div></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="cl-tile-m"><img src="chowgule2-converted-from-png.svg" class="cl-logo"><div class="cl-n">Chowgule SBD</div></div>
+    <div class="cl-tile-m"><img src="logo-converted-from-png.svg" class="cl-logo"><div class="cl-n">Cloude2scale</div></div>
+    <div class="cl-tile-m"><img src="juno_logo_1024x1024-converted-from-webp.svg" class="cl-logo"><div class="cl-n">Juno School</div></div>
+    <div class="cl-tile-m"><img src="template_photo_1.svg" class="cl-logo"><div class="cl-n">Paragon Tapes</div></div>
+    <div class="cl-tile-m"><img src="61389611a332e4a1a396414e_Turbotech-logo-p-500-converted-from-png.svg" class="cl-logo"><div class="cl-n">Turbotech Precision</div></div>
+    <div class="cl-tile-m"><img src="cii-logoNew-converted-from-png.svg" class="cl-logo"><div class="cl-n">CII</div></div>
   </div>
 </div>
-
 <p class="cl-note">Trusted by leading organisations across industries.</p>
   
 
@@ -1041,6 +1189,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 </div><!-- end .page -->
 
 <script>
+/* ── Navigation ── */
 function goTo(id){
   const el=document.getElementById(id);
   if(!el)return;
@@ -1062,6 +1211,118 @@ document.getElementById('sbtn').addEventListener('click',function(){
   this.style.background='#1a5238';
   setTimeout(()=>{this.textContent='Send message';this.style.background=''},2500);
 });
+
+/* ══════════════════════════════
+   CUSTOM CURSOR
+   ══════════════════════════════ */
+const dot = document.getElementById('cursor-dot');
+const ring = document.getElementById('cursor-ring');
+const trail = document.getElementById('cursor-trail');
+const tCtx = trail.getContext('2d');
+let W,H;
+function rsz(){W=trail.width=window.innerWidth;H=trail.height=window.innerHeight}
+rsz(); window.addEventListener('resize',rsz);
+
+let mx=0,my=0,rx=0,ry=0;
+const pts=[];
+
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  dot.style.left=mx+'px'; dot.style.top=my+'px';
+  pts.push({x:mx,y:my,t:Date.now()});
+  if(pts.length>18) pts.shift();
+});
+
+(function loop(){
+  // ring — fast lerp
+  rx+=(mx-rx)*.35; ry+=(my-ry)*.35;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+
+  // trail — fade old points quickly (60ms lifespan)
+  tCtx.clearRect(0,0,W,H);
+  const now=Date.now();
+  const LIFE=60;
+  for(let i=1;i<pts.length;i++){
+    const age=now-pts[i].t;
+    if(age>LIFE) continue;
+    const alpha=(1-age/LIFE)*0.45;
+    const width=(1-age/LIFE)*2.5;
+    tCtx.beginPath();
+    tCtx.moveTo(pts[i-1].x,pts[i-1].y);
+    tCtx.lineTo(pts[i].x,pts[i].y);
+    tCtx.strokeStyle=`rgba(45,106,79,${alpha})`;
+    tCtx.lineWidth=width;
+    tCtx.lineCap='round';
+    tCtx.stroke();
+  }
+  requestAnimationFrame(loop);
+})();
+
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.classList.add('hovered');ring.classList.add('hovered')});
+  el.addEventListener('mouseleave',()=>{dot.classList.remove('hovered');ring.classList.remove('hovered')});
+});
+
+/* ══════════════════════════════
+   SCROLL REVEAL (IntersectionObserver)
+   ══════════════════════════════ */
+const revealEls=document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.12});
+revealEls.forEach(el=>observer.observe(el));
+
+/* ══════════════════════════════
+   STAT COUNT-UP
+   ══════════════════════════════ */
+function countUp(el, target, suffix=''){
+  const num = parseInt(target);
+  let start=0;
+  const step=Math.ceil(num/40);
+  el.classList.add('counting');
+  const iv=setInterval(()=>{
+    start=Math.min(start+step,num);
+    el.textContent=start+suffix;
+    if(start>=num) clearInterval(iv);
+  },28);
+}
+const statObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const sNums=e.target.querySelectorAll('.s-num');
+      sNums.forEach(n=>{
+        const txt=n.textContent.trim();
+        if(txt==='22+') countUp(n,22,'+');
+        else if(txt==='2000+') countUp(n,2000,'+');
+        else if(txt==='40+') countUp(n,40,'+');
+      });
+      statObserver.unobserve(e.target);
+    }
+  });
+},{threshold:0.5});
+const heroStats=document.querySelector('.hero-stats');
+if(heroStats) statObserver.observe(heroStats);
+
+/* ══════════════════════════════
+   NAV ACTIVE ON SCROLL
+   ══════════════════════════════ */
+const sections=['about','consulting','training','resources','casestudies','clients','gallery','contact'];
+const navMap={about:'About',consulting:'Consulting',training:'Training',resources:'Resources',casestudies:'Case Studies',clients:'Clients',gallery:'Gallery',contact:'Contact'};
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&window.scrollY>=el.offsetTop-100) current=id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active',a.textContent.trim()===(navMap[current]||''));
+  });
+},{passive:true});
 </script>
 </body>
 </html>
