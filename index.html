@@ -206,18 +206,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 .corp-bar p{font-size:15px;font-weight:700;color:var(--navy)}
 .corp-bar span{font-size:13px;color:var(--muted)}
 
-/* ── BROCHURE / RESOURCES ── */
-.resources-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.res-card{border:1px solid var(--border);border-radius:12px;padding:22px;background:#fff;text-align:center;transition:border-color .2s,box-shadow .2s}
-.res-card:hover{border-color:var(--sky);box-shadow:0 4px 16px rgba(47,136,198,.1)}
-.res-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px}
-.res-card h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px}
-.res-card p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:14px}
-.res-btn{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border:none;padding:8px 18px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .15s}
-.res-btn:hover{background:var(--sky)}
-.res-btn.outline{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
-.res-btn.outline:hover{border-color:var(--sky);color:var(--sky)}
-
 /* ── CASE STUDIES ── */
 .case-list{display:flex;flex-direction:column;gap:13px}
 .case-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;transition:border-color .2s}
@@ -323,6 +311,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
   border:1px solid var(--border);
   background:#fff;
   transition:transform .2s, box-shadow .2s;
+  cursor:pointer;
+  padding:0;
+  appearance:none;
 }
 
 .gallery-item:hover{
@@ -344,6 +335,12 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 .gallery-item{
   scroll-snap-align:start;
 }
+.gallery-lightbox{position:fixed;inset:0;background:rgba(11,31,58,.82);display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;pointer-events:none;transition:opacity .22s ease;z-index:120}
+.gallery-lightbox.open{opacity:1;pointer-events:auto}
+.gallery-lightbox-dialog{position:relative;width:min(100%,980px);max-height:min(90vh,820px);background:#08172c;border:1px solid rgba(255,255,255,.16);border-radius:18px;padding:18px;box-shadow:0 24px 80px rgba(0,0,0,.35)}
+.gallery-lightbox-dialog img{width:100%;max-height:calc(90vh - 72px);object-fit:contain;display:block;border-radius:12px;background:#0f223d}
+.gallery-close{position:absolute;top:10px;right:10px;width:40px;height:40px;border:none;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:24px;line-height:1;cursor:pointer}
+.gallery-close:hover{background:rgba(255,255,255,.22)}
 /* ── CONTACT ── */
 .contact-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:36px}
 #contact{padding-bottom:18px}
@@ -362,13 +359,17 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 .ff input,.ff select,.ff textarea{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-size:14px;background:#fff;color:var(--navy);font-family:inherit;transition:border-color .15s}
 .ff textarea{height:86px;resize:none}
 .ff input:focus,.ff select:focus,.ff textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(45,106,79,.09)}
+.ff.invalid input,.ff.invalid select,.ff.invalid textarea{border-color:#c44949;box-shadow:0 0 0 3px rgba(196,73,73,.12)}
+.field-error{display:none;font-size:11px;color:#c44949;margin-top:6px;line-height:1.4}
+.ff.invalid .field-error{display:block}
 .s-btn{background:var(--green);color:#fff;border:none;padding:13px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%;transition:background .15s}
 .s-btn:hover{background:var(--green-mid)}
+.s-btn:disabled{background:#8fb4a1;cursor:not-allowed}
 .wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;border:none;padding:12px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;width:100%;margin-top:8px;transition:background .15s}
 .wa-btn:hover{background:#1da851}
 
 /* ── FOOTER ── */
-.footer{background:var(--navy);padding:50px 40px;display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr;gap:32px;width:100%}
+.footer{background:var(--navy);padding:50px 40px;display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr;gap:32px;width:100%;margin:0}
 .footer h4{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:14px}
 .footer ul{list-style:none;display:flex;flex-direction:column;gap:8px}
 .footer ul li a{font-size:13px;color:rgba(255,255,255,.5);cursor:pointer;text-decoration:none;transition:color .15s}
@@ -379,7 +380,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
 .{width:38px;height:38px;border-radius:8px;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;position:relative;overflow:hidden}
 .::after{content:'';position:absolute;bottom:5px;right:5px;width:11px;height:11px;background:rgba(255,255,255,.35);border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
 .f-ln{font-size:14px;font-weight:700;color:#fff}
-.footer-bottom{padding:14px 40px 22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.3);background:var(--navy);width:100%}
+.footer-bottom{padding:14px 40px 22px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.3);background:var(--navy);width:100%;margin:0}
 
 /* ── RESPONSIVE ── */
 @media(max-width:860px){
@@ -398,7 +399,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
   .train-grid{grid-template-columns:1fr 1fr}
   .impact-grid{grid-template-columns:1fr 1fr}
   .cl-grid{grid-template-columns:repeat(3,1fr)}
-  .test-grid,.resources-grid{grid-template-columns:1fr 1fr}
+  .test-grid{grid-template-columns:1fr 1fr}
   .awards-row{grid-template-columns:1fr}
   .footer{grid-template-columns:1fr 1fr;padding:36px 20px}
   .footer-bottom{padding:13px 20px;flex-direction:column;gap:4px;text-align:center}
@@ -408,6 +409,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
   .case-metrics{display:none}
   .hero-tagline-bg{padding:12px 20px}
   .photo-area{min-height:280px}
+  .gallery-scroll{grid-template-rows:repeat(2,180px)}
+  .gallery-item{width:240px}
 }
 @media(max-width:520px){
   .train-grid{grid-template-columns:1fr}
@@ -419,6 +422,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 4
   .motion-core{width:108px;height:108px}
   .motion-line{opacity:.55}
   .photo-area{min-height:220px;padding:10px}
+  .gallery-scroll{grid-template-rows:none;grid-auto-flow:row;grid-template-columns:1fr;overflow-x:visible}
+  .gallery-item{width:100%;height:220px}
+  .gallery-lightbox{padding:16px}
+  .gallery-lightbox-dialog{padding:12px}
 }
 
 /* ══════════════════════════════════════════
@@ -610,7 +617,6 @@ nav{animation:navSlideDown .5s .05s both}
     <a onclick="goTo('about')">About</a>
     <a onclick="goTo('consulting')">Consulting</a>
     <a onclick="goTo('training')">Training</a>
-    <a onclick="goTo('resources')">Resources</a>
     <a onclick="goTo('casestudies')">Case Studies</a>
     <a onclick="goTo('clients')">Clients</a>
     <a onclick="goTo('gallery')">Gallery</a>
@@ -897,52 +903,6 @@ nav{animation:navSlideDown .5s .05s both}
 
 <div class="divider"></div>
 
-<!-- ══ RESOURCES / BROCHURES ══ -->
-<div class="sec" id="resources">
-  <div class="sec-head">
-    <div class="sec-bar"></div>
-    <div>
-      <div class="sec-tag">Resources</div>
-      <div class="sec-title">Brochures, catalogues & materials</div>
-      <div class="sec-sub">Download our program brochures and training catalogues, or access our full document library on Google Drive.</div>
-    </div>
-  </div>
-  <div class="resources-grid" style="grid-template-columns:repeat(4,1fr)">
-    <div class="res-card">
-      <div class="res-icon" style="background:var(--green-lt)">📄</div>
-      <h4>Company brochure</h4>
-      <p>Overview of Seeds Consulting Group — services, approach, and case highlights.</p>
-      <a class="res-btn" href="#" onclick="alert('Paste your Google Drive PDF link here')">↓ Download PDF</a>
-    </div>
-    <div class="res-card">
-      <div class="res-icon" style="background:var(--sky-lt)">📚</div>
-      <h4>Training catalogue</h4>
-      <p>Full listing of all certification programs, workshops, and corporate training offerings.</p>
-      <a class="res-btn" href="#" onclick="alert('Paste your Google Drive PDF link here')">↓ Download PDF</a>
-    </div>
-    <div class="res-card">
-      <div class="res-icon" style="background:#EEF0FF">📁</div>
-      <h4>Document library</h4>
-      <p>Access all brochures, case studies, and program materials in our Google Drive folder.</p>
-      <a class="res-btn outline" href="https://drive.google.com" target="_blank">↗ Open Drive</a>
-    </div>
-    <div class="res-card" style="border:2px solid var(--green);position:relative">
-      <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;border-radius:0 0 8px 8px;letter-spacing:.05em;white-space:nowrap">ONLINE COURSES</div>
-      <div class="res-icon" style="background:var(--green-lt);margin-top:14px">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-      </div>
-      <h4>Graphy — online courses</h4>
-      <p>Explore and enrol in Seeds' online training programs, course packs, and digital learning materials.</p>
-      <a class="res-btn" href="https://graphy.com" target="_blank" id="graphy-link" style="background:var(--green)">↗ Visit Graphy platform</a>
-    </div>
-  </div>
-  <div style="margin-top:14px;padding:14px 20px;border:1px solid var(--border);border-radius:10px;background:var(--off);font-size:13px;color:var(--muted)">
-    💡 <strong style="color:var(--navy)">To update links:</strong> Replace <code>href="#"</code> on the brochure buttons with your Google Drive share links, and update the Graphy button's <code>href</code> with your exact Graphy URL (e.g. <code>graphy.com/seedscg</code>).
-  </div>
-</div>
-
-<div class="divider"></div>
-
 <!-- ══ CASE STUDIES ══ -->
 <div class="sec alt" id="casestudies">
   <div class="sec-head">
@@ -1143,21 +1103,28 @@ nav{animation:navSlideDown .5s .05s both}
   </div>
 
   <div class="gallery-scroll">
+  <button class="gallery-item" type="button" data-full="images/gallery1.jpg" aria-label="Open gallery image 1"><img src="images/gallery1.jpg" alt="Seeds Consulting Group gallery image 1"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery2.jpg" aria-label="Open gallery image 2"><img src="images/gallery2.jpg" alt="Seeds Consulting Group gallery image 2"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery3.jpeg" aria-label="Open gallery image 3"><img src="images/gallery3.jpeg" alt="Seeds Consulting Group gallery image 3"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery4.jpeg" aria-label="Open gallery image 4"><img src="images/gallery4.jpeg" alt="Seeds Consulting Group gallery image 4"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery5.jpeg" aria-label="Open gallery image 5"><img src="images/gallery5.jpeg" alt="Seeds Consulting Group gallery image 5"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery6.jpeg" aria-label="Open gallery image 6"><img src="images/gallery6.jpeg" alt="Seeds Consulting Group gallery image 6"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery7.jpeg" aria-label="Open gallery image 7"><img src="images/gallery7.jpeg" alt="Seeds Consulting Group gallery image 7"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery8.jpeg" aria-label="Open gallery image 8"><img src="images/gallery8.jpeg" alt="Seeds Consulting Group gallery image 8"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery9.jpeg" aria-label="Open gallery image 9"><img src="images/gallery9.jpeg" alt="Seeds Consulting Group gallery image 9"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery10.jpg" aria-label="Open gallery image 10"><img src="images/gallery10.jpg" alt="Seeds Consulting Group gallery image 10"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery11.jpg" aria-label="Open gallery image 11"><img src="images/gallery11.jpg" alt="Seeds Consulting Group gallery image 11"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery12.jpeg" aria-label="Open gallery image 12"><img src="images/gallery12.jpeg" alt="Seeds Consulting Group gallery image 12"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery13.jpeg" aria-label="Open gallery image 13"><img src="images/gallery13.jpeg" alt="Seeds Consulting Group gallery image 13"></button>
+  <button class="gallery-item" type="button" data-full="images/gallery14.jpg" aria-label="Open gallery image 14"><img src="images/gallery14.jpg" alt="Seeds Consulting Group gallery image 14"></button>
+  </div>
+</div>
 
-  <div class="gallery-item"><img src="images/gallery1.jpg"></div>
-  <div class="gallery-item"><img src="images/gallery2.jpg"></div>
-  <div class="gallery-item"><img src="images/gallery3.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery4.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery5.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery6.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery7.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery8.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery9.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery10.jpg"></div>
-  <div class="gallery-item"><img src="images/gallery11.jpg"></div>
-  <div class="gallery-item"><img src="images/gallery12.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery13.jpeg"></div>
-  <div class="gallery-item"><img src="images/gallery14.jpg"></div>
+<div class="gallery-lightbox" id="gallery-lightbox" aria-hidden="true">
+  <div class="gallery-lightbox-dialog" role="dialog" aria-modal="true" aria-label="Expanded gallery image">
+    <button class="gallery-close" type="button" id="gallery-close" aria-label="Close image viewer">&times;</button>
+    <img id="gallery-lightbox-image" src="" alt="Expanded gallery view">
+  </div>
 </div>
 
 <!-- ══ CONTACT ══ -->
@@ -1174,22 +1141,22 @@ nav{animation:navSlideDown .5s .05s both}
     <div class="ci-list">
       <div class="ci-item"><div class="ci-ico">📍</div><div><strong>Office</strong><span>5BM-248, HRBR Layout, 2nd Block, Kalyan Nagar, Near Banaswadi Police Station, Bangalore 560043</span></div></div>
       <div class="ci-item"><div class="ci-ico">📞</div><div><strong>Phone</strong><span id="phone-display">+91 99001 61782</span></div></div>
-      <div class="ci-item"><div class="ci-ico">✉️</div><div><strong>Email</strong><span>raghukram@gmail.com</span></div></div>
+      <div class="ci-item"><div class="ci-ico">✉️</div><div><strong>Email</strong><span>raghuram@seedscg.com</span></div></div>
       <div class="ci-item"><div class="ci-ico">🕐</div><div><strong>Hours</strong><span>Monday – Saturday, 9:00 AM – 5:00 PM IST</span></div></div>
       <div class="c-note"><p>Consulting enquiry?</p><span>Share your challenge and we'll respond within 24 hours with a tailored approach.</span></div>
     </div>
-    <div class="form">
+    <form class="form" id="contact-form" novalidate>
       <div class="frow">
-        <div class="ff"><label>Name <span class="req">(Mandatory Text Field)</span></label><input type="text" placeholder="Mandatory text field" required/></div>
-        <div class="ff"><label>Company <span class="req">(Mandatory Text Field)</span></label><input type="text" placeholder="Mandatory text field" required/></div>
+        <div class="ff"><label for="name">Name <span class="req">*</span></label><input id="name" name="name" type="text" placeholder="Your name" required minlength="3" data-error="Please enter your full name."><div class="field-error"></div></div>
+        <div class="ff"><label for="company">Company <span class="req">*</span></label><input id="company" name="company" type="text" placeholder="Company name" required minlength="3" data-error="Please enter the full company name."><div class="field-error"></div></div>
       </div>
       <div class="frow">
-        <div class="ff"><label>Email <span class="req">(Mandatory Text Field)</span></label><input type="email" placeholder="Mandatory text field" required/></div>
-        <div class="ff"><label>Phone <span class="req">(Mandatory Text Field)</span></label><input type="tel" placeholder="Mandatory text field" required/></div>
+        <div class="ff"><label for="email">Email <span class="req">*</span></label><input id="email" name="email" type="email" placeholder="you@company.com" required data-error="Please enter a complete email address."><div class="field-error"></div></div>
+        <div class="ff"><label for="phone">Phone <span class="req">*</span></label><input id="phone" name="phone" type="tel" placeholder="+91 XXXXX XXXXX" required pattern="^\+?[0-9\s-]{10,15}$" data-error="Please enter the full phone number."><div class="field-error"></div></div>
       </div>
       <div class="ff">
-        <label>I'm interested in <span class="req">(Mandatory Text Field)</span></label>
-        <select required>
+        <label for="interest">I'm interested in <span class="req">*</span></label>
+        <select id="interest" name="interest" required data-error="Please choose one service.">
           <option>Lean Six Sigma Training (Belt Program)</option>
           <option>Quality Tools Training</option>
           <option>Reliability & Statistics Training</option>
@@ -1199,14 +1166,15 @@ nav{animation:navSlideDown .5s .05s both}
           <option>Project Management</option>
           <option>Custom / Corporate Engagement</option>
         </select>
+        <div class="field-error"></div>
       </div>
-      <div class="ff"><label>Message <span class="req">(Mandatory Text Field)</span></label><textarea placeholder="Mandatory text field" required></textarea></div>
-      <button class="s-btn" id="sbtn">Send message</button>
-      <button class="wa-btn" onclick="window.open('https://wa.me/919900161782','_blank')">
+      <div class="ff"><label for="message">Message <span class="req">*</span></label><textarea id="message" name="message" placeholder="Tell us about your challenge or requirement..." required minlength="20" data-error="Please complete your message before sending."></textarea><div class="field-error"></div></div>
+      <button class="s-btn" id="sbtn" type="submit" disabled>Send message</button>
+      <button class="wa-btn" type="button" onclick="window.open('https://wa.me/919900161782','_blank')">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.76.463 3.41 1.27 4.842L2 22l5.278-1.243A9.951 9.951 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.948 7.948 0 0 1-4.05-1.108l-.29-.172-3.13.737.752-3.058-.19-.314A7.961 7.961 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
         Chat on WhatsApp
       </button>
-    </div>
+    </form>
   </div>
 </div>
 
@@ -1237,7 +1205,7 @@ nav{animation:navSlideDown .5s .05s both}
       <li><a onclick="goTo('training')">Quality tools</a></li>
       <li><a onclick="goTo('training')">Reliability & statistics</a></li>
       <li><a onclick="goTo('training')">Soft skills & leadership</a></li>
-      <li><a onclick="goTo('resources')">Brochures & catalogues</a></li>
+      <li><a onclick="goTo('gallery')">Gallery highlights</a></li>
     </ul>
   </div>
   <div>
@@ -1265,7 +1233,7 @@ function goTo(id){
   if(!el)return;
   el.scrollIntoView({behavior:'smooth',block:'start'});
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  const map={about:'About',consulting:'Consulting',training:'Training',resources:'Resources',casestudies:'Case Studies',clients:'Clients',awards:'Awards',contact:'Contact'};
+  const map={about:'About',consulting:'Consulting',training:'Training',casestudies:'Case Studies',clients:'Clients',gallery:'Gallery',contact:'Contact'};
   document.querySelectorAll('.nav-links a').forEach(a=>{if(a.textContent.trim()===(map[id]||''))a.classList.add('active')});
 }
 function toggleCase(id){
@@ -1276,11 +1244,100 @@ function toggleCase(id){
   document.querySelectorAll('.toggle-btn').forEach(b=>b.textContent='Read full case study ↓');
   if(!isOpen){body.classList.add('open');btn.textContent='Close ↑'}
 }
-document.getElementById('sbtn').addEventListener('click',function(){
-  this.textContent='Message sent ✓';
-  this.style.background='#1a5238';
-  setTimeout(()=>{this.textContent='Send message';this.style.background=''},2500);
+
+const galleryLightbox=document.getElementById('gallery-lightbox');
+const galleryLightboxImage=document.getElementById('gallery-lightbox-image');
+const galleryClose=document.getElementById('gallery-close');
+document.querySelectorAll('.gallery-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const full=item.getAttribute('data-full');
+    const img=item.querySelector('img');
+    galleryLightboxImage.src=full;
+    galleryLightboxImage.alt=img ? img.alt : 'Expanded gallery image';
+    galleryLightbox.classList.add('open');
+    galleryLightbox.setAttribute('aria-hidden','false');
+  });
 });
+function closeGalleryLightbox(){
+  galleryLightbox.classList.remove('open');
+  galleryLightbox.setAttribute('aria-hidden','true');
+  galleryLightboxImage.src='';
+}
+galleryClose.addEventListener('click',closeGalleryLightbox);
+galleryLightbox.addEventListener('click',e=>{
+  if(e.target===galleryLightbox) closeGalleryLightbox();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&galleryLightbox.classList.contains('open')) closeGalleryLightbox();
+});
+
+const contactForm=document.getElementById('contact-form');
+const submitBtn=document.getElementById('sbtn');
+const fields=[...contactForm.querySelectorAll('input, select, textarea')];
+function validateField(field, showError){
+  const wrapper=field.closest('.ff');
+  const errorEl=wrapper ? wrapper.querySelector('.field-error') : null;
+  const value=field.value.trim();
+  let message='';
+
+  if(field.tagName==='SELECT'&&value===''){
+    message=field.getAttribute('data-error')||'Please choose an option.';
+  }else if(field.required&&value===''){
+    message=field.getAttribute('data-error')||'This field is required.';
+  }else if(field.type==='email'&&field.validity.typeMismatch){
+    message=field.getAttribute('data-error')||'Please enter a valid email address.';
+  }else if(field.hasAttribute('pattern')&&value!==''&&!field.validity.valid){
+    message=field.getAttribute('data-error')||'Please complete this field.';
+  }else if(field.hasAttribute('minlength')&&value.length>0&&value.length<Number(field.getAttribute('minlength'))){
+    message=field.getAttribute('data-error')||'Please complete this field.';
+  }
+
+  if(wrapper){
+    wrapper.classList.toggle('invalid',showError&&message!=='');
+  }
+  if(errorEl){
+    errorEl.textContent=showError ? message : '';
+  }
+  return message==='';
+}
+function updateSubmitState(){
+  const ready=fields.every(field=>validateField(field,false));
+  submitBtn.disabled=!ready;
+}
+fields.forEach(field=>{
+  field.addEventListener('input',()=>{
+    validateField(field,field.dataset.touched==='true');
+    updateSubmitState();
+  });
+  field.addEventListener('blur',()=>{
+    field.dataset.touched='true';
+    validateField(field,true);
+    updateSubmitState();
+  });
+});
+contactForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  let allValid=true;
+  fields.forEach(field=>{
+    field.dataset.touched='true';
+    if(!validateField(field,true)) allValid=false;
+  });
+  updateSubmitState();
+  if(!allValid) return;
+  submitBtn.textContent='Message sent ✓';
+  submitBtn.style.background='#1a5238';
+  setTimeout(()=>{
+    submitBtn.textContent='Send message';
+    submitBtn.style.background='';
+    contactForm.reset();
+    fields.forEach(field=>{
+      delete field.dataset.touched;
+      validateField(field,false);
+    });
+    updateSubmitState();
+  },2500);
+});
+updateSubmitState();
 
 /* ══════════════════════════════
    CUSTOM CURSOR
@@ -1381,8 +1438,8 @@ if(heroStats) statObserver.observe(heroStats);
 /* ══════════════════════════════
    NAV ACTIVE ON SCROLL
    ══════════════════════════════ */
-const sections=['about','consulting','training','resources','casestudies','clients','gallery','contact'];
-const navMap={about:'About',consulting:'Consulting',training:'Training',resources:'Resources',casestudies:'Case Studies',clients:'Clients',gallery:'Gallery',contact:'Contact'};
+const sections=['about','consulting','training','casestudies','clients','gallery','contact'];
+const navMap={about:'About',consulting:'Consulting',training:'Training',casestudies:'Case Studies',clients:'Clients',gallery:'Gallery',contact:'Contact'};
 window.addEventListener('scroll',()=>{
   let current='';
   sections.forEach(id=>{
