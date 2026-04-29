@@ -1376,28 +1376,26 @@ fields.forEach(field=>{
     updateSubmitState();
   });
 });
+
 contactForm.addEventListener('submit',e=>{
-  e.preventDefault();
   let allValid=true;
+
   fields.forEach(field=>{
     field.dataset.touched='true';
     if(!validateField(field,true)) allValid=false;
   });
+
   updateSubmitState();
-  if(!allValid) return;
-  submitBtn.textContent='Message sent ✓';
-  submitBtn.style.background='#1a5238';
-  setTimeout(()=>{
-    submitBtn.textContent='Send message';
-    submitBtn.style.background='';
-    contactForm.reset();
-    fields.forEach(field=>{
-      delete field.dataset.touched;
-      validateField(field,false);
-    });
-    updateSubmitState();
-  },2500);
-});
+
+  if(!allValid){
+    e.preventDefault(); // stop ONLY if invalid
+    return;
+  }
+
+  // DO NOTHING HERE
+  // let form submit normally to Formspree
+});   
+   
 updateSubmitState();
 
 /* ══════════════════════════════
